@@ -1,13 +1,9 @@
-// backend/server.js
-// Deploy this to Railway, Render, or Fly.io
-// Set ANTHROPIC_API_KEY as an environment variable — never hardcode it
-
 import express from 'express';
 import cors from 'cors';
 
 const app = express();
 app.use(express.json());
-app.use(cors({ origin: process.env.ALLOWED_ORIGIN || '*' }));
+app.use(cors());
 
 app.post('/api/search', async (req, res) => {
   const { prompt } = req.body;
@@ -28,7 +24,6 @@ app.post('/api/search', async (req, res) => {
         messages: [{ role: 'user', content: prompt }],
       }),
     });
-
     const data = await response.json();
     res.json(data);
   } catch (err) {
